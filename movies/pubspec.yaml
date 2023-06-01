@@ -1,0 +1,21 @@
+name: movies
+description: This is project in clean archtecture.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.2 <4.0.0'
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  lint: ^2.0.1
+
+flutter:
+
+  uses-material-design: true
