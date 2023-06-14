@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:movies/data.network/entity/movie_entity.dart';
-
+import 'package:movies/data/network/entity/movie_entity.dart';
 import 'package:movies/domain/exception/network_exception.dart';
 
 class ApiClient {
@@ -13,7 +12,7 @@ class ApiClient {
   }) {
     _dio = Dio()
       ..options.baseUrl = baseUrl
-      ..options.headers = {'X-RapidApi-Key': apiKey, 'X-RapidApi-Host': apiHost}
+      ..options.headers = {'X-RapidAPI-Key': apiKey, 'X-RapidAPI-Host': apiHost}
       ..interceptors.add(
         LogInterceptor(
           requestBody: true,
@@ -41,7 +40,4 @@ class ApiClient {
     }else{ throw Exception('Unknown error');}
 
   }
-
-
-
 }

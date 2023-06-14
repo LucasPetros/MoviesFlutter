@@ -8,5 +8,4 @@ class NetworkException implements Exception{
 
   @override
   String toString() => 'NetworkException statusCode: $statusCode, message: $message';
-
 }

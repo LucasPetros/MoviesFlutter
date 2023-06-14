@@ -1,13 +1,17 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 part 'movie_entity.g.dart';
 
 @JsonSerializable()
 class UpcomingMovies {
-  List<MovieEntity> results;
-
   UpcomingMovies({
+    required this.next,
+    required this.entries,
     required this.results,
   });
+
+  String next;
+  int entries;
+  List<MovieEntity> results;
 
   factory UpcomingMovies.fromJson(Map<String, dynamic> json) =>
       _$UpcomingMoviesFromJson(json);
@@ -15,48 +19,28 @@ class UpcomingMovies {
 
 @JsonSerializable()
 class MovieEntity {
-  String id;
-  String resultId;
-  PrimaryImage? primaryImage;
-  TitleType titleType;
-  TitleText titleText;
-  ReleaseYear releaseYear;
-  ReleaseDate releaseDate;
-
   MovieEntity({
     required this.id,
-    required this.resultId,
     this.primaryImage,
     required this.titleType,
     required this.titleText,
-    required this.releaseYear,
+    this.releaseYear,
     required this.releaseDate,
   });
+
+  String id;
+  PrimaryImage? primaryImage;
+  TitleType titleType;
+  TitleText titleText;
+  ReleaseYear? releaseYear;
+  ReleaseDate releaseDate;
 
   factory MovieEntity.fromJson(Map<String, dynamic> json) =>
       _$MovieEntityFromJson(json);
 }
 
 @JsonSerializable()
-class TitleText {
-  String text;
-
-  TitleText({
-    required this.text,
-  });
-
-  factory TitleText.fromJson(Map<String, dynamic> json) =>
-      _$TitleTextFromJson(json);
-}
-
-@JsonSerializable()
 class PrimaryImage {
-  String id;
-  int width;
-  int height;
-  String url;
-  Caption caption;
-
   PrimaryImage({
     required this.id,
     required this.width,
@@ -65,17 +49,23 @@ class PrimaryImage {
     required this.caption,
   });
 
+  String id;
+  int width;
+  int height;
+  String url;
+  Caption caption;
+
   factory PrimaryImage.fromJson(Map<String, dynamic> json) =>
       _$PrimaryImageFromJson(json);
 }
 
 @JsonSerializable()
 class Caption {
-  String plainText;
-
   Caption({
     required this.plainText,
   });
+
+  String plainText;
 
   factory Caption.fromJson(Map<String, dynamic> json) =>
       _$CaptionFromJson(json);
@@ -83,15 +73,15 @@ class Caption {
 
 @JsonSerializable()
 class ReleaseDate {
-  int day;
-  int month;
-  int year;
-
   ReleaseDate({
     required this.day,
     required this.month,
     required this.year,
   });
+
+  int day;
+  int month;
+  int year;
 
   factory ReleaseDate.fromJson(Map<String, dynamic> json) =>
       _$ReleaseDateFromJson(json);
@@ -99,35 +89,47 @@ class ReleaseDate {
 
 @JsonSerializable()
 class ReleaseYear {
-  int year;
-  int? endYear;
-
   ReleaseYear({
     required this.year,
     this.endYear,
   });
+
+  int year;
+  dynamic endYear;
 
   factory ReleaseYear.fromJson(Map<String, dynamic> json) =>
       _$ReleaseYearFromJson(json);
 }
 
 @JsonSerializable()
-class TitleType {
-  String text;
-  String id;
-  bool isSeries;
-  bool isEpisode;
-  List<Category> categories;
-  bool canHaveEpisodes;
+class TitleText {
+  TitleText({
+    required this.text,
+  });
 
+  String text;
+
+  factory TitleText.fromJson(Map<String, dynamic> json) =>
+      _$TitleTextFromJson(json);
+}
+
+@JsonSerializable()
+class TitleType {
   TitleType({
     required this.text,
     required this.id,
     required this.isSeries,
     required this.isEpisode,
-    required this.categories,
-    required this.canHaveEpisodes,
+    this.categories,
+    this.canHaveEpisodes,
   });
+
+  String text;
+  String id;
+  bool isSeries;
+  bool isEpisode;
+  List<Category>? categories;
+  bool? canHaveEpisodes;
 
   factory TitleType.fromJson(Map<String, dynamic> json) =>
       _$TitleTypeFromJson(json);
@@ -135,24 +137,12 @@ class TitleType {
 
 @JsonSerializable()
 class Category {
-  Caption value;
-
   Category({
     required this.value,
   });
 
+  String value;
+
   factory Category.fromJson(Map<String, dynamic> json) =>
       _$CategoryFromJson(json);
-}
-
-@JsonSerializable()
-class DisplayableProperty {
-  Caption value;
-
-  DisplayableProperty({
-    required this.value,
-  });
-
-  factory DisplayableProperty.fromJson(Map<String, dynamic> json) =>
-      _$DisplayablePropertyFromJson(json);
 }

@@ -8,6 +8,8 @@ part of 'movie_entity.dart';
 
 UpcomingMovies _$UpcomingMoviesFromJson(Map<String, dynamic> json) =>
     UpcomingMovies(
+      next: json['next'] as String,
+      entries: json['entries'] as int,
       results: (json['results'] as List<dynamic>)
           .map((e) => MovieEntity.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -15,19 +17,21 @@ UpcomingMovies _$UpcomingMoviesFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$UpcomingMoviesToJson(UpcomingMovies instance) =>
     <String, dynamic>{
+      'next': instance.next,
+      'entries': instance.entries,
       'results': instance.results,
     };
 
 MovieEntity _$MovieEntityFromJson(Map<String, dynamic> json) => MovieEntity(
       id: json['id'] as String,
-      resultId: json['resultId'] as String,
       primaryImage: json['primaryImage'] == null
           ? null
           : PrimaryImage.fromJson(json['primaryImage'] as Map<String, dynamic>),
       titleType: TitleType.fromJson(json['titleType'] as Map<String, dynamic>),
       titleText: TitleText.fromJson(json['titleText'] as Map<String, dynamic>),
-      releaseYear:
-          ReleaseYear.fromJson(json['releaseYear'] as Map<String, dynamic>),
+      releaseYear: json['releaseYear'] == null
+          ? null
+          : ReleaseYear.fromJson(json['releaseYear'] as Map<String, dynamic>),
       releaseDate:
           ReleaseDate.fromJson(json['releaseDate'] as Map<String, dynamic>),
     );
@@ -35,20 +39,11 @@ MovieEntity _$MovieEntityFromJson(Map<String, dynamic> json) => MovieEntity(
 Map<String, dynamic> _$MovieEntityToJson(MovieEntity instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'resultId': instance.resultId,
       'primaryImage': instance.primaryImage,
       'titleType': instance.titleType,
       'titleText': instance.titleText,
       'releaseYear': instance.releaseYear,
       'releaseDate': instance.releaseDate,
-    };
-
-TitleText _$TitleTextFromJson(Map<String, dynamic> json) => TitleText(
-      text: json['text'] as String,
-    );
-
-Map<String, dynamic> _$TitleTextToJson(TitleText instance) => <String, dynamic>{
-      'text': instance.text,
     };
 
 PrimaryImage _$PrimaryImageFromJson(Map<String, dynamic> json) => PrimaryImage(
@@ -91,7 +86,7 @@ Map<String, dynamic> _$ReleaseDateToJson(ReleaseDate instance) =>
 
 ReleaseYear _$ReleaseYearFromJson(Map<String, dynamic> json) => ReleaseYear(
       year: json['year'] as int,
-      endYear: json['endYear'] as int?,
+      endYear: json['endYear'],
     );
 
 Map<String, dynamic> _$ReleaseYearToJson(ReleaseYear instance) =>
@@ -100,15 +95,23 @@ Map<String, dynamic> _$ReleaseYearToJson(ReleaseYear instance) =>
       'endYear': instance.endYear,
     };
 
+TitleText _$TitleTextFromJson(Map<String, dynamic> json) => TitleText(
+      text: json['text'] as String,
+    );
+
+Map<String, dynamic> _$TitleTextToJson(TitleText instance) => <String, dynamic>{
+      'text': instance.text,
+    };
+
 TitleType _$TitleTypeFromJson(Map<String, dynamic> json) => TitleType(
       text: json['text'] as String,
       id: json['id'] as String,
       isSeries: json['isSeries'] as bool,
       isEpisode: json['isEpisode'] as bool,
-      categories: (json['categories'] as List<dynamic>)
-          .map((e) => Category.fromJson(e as Map<String, dynamic>))
+      categories: (json['categories'] as List<dynamic>?)
+          ?.map((e) => Category.fromJson(e as Map<String, dynamic>))
           .toList(),
-      canHaveEpisodes: json['canHaveEpisodes'] as bool,
+      canHaveEpisodes: json['canHaveEpisodes'] as bool?,
     );
 
 Map<String, dynamic> _$TitleTypeToJson(TitleType instance) => <String, dynamic>{
@@ -121,20 +124,9 @@ Map<String, dynamic> _$TitleTypeToJson(TitleType instance) => <String, dynamic>{
     };
 
 Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
-      value: Caption.fromJson(json['value'] as Map<String, dynamic>),
+      value: json['value'] as String,
     );
 
 Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
-      'value': instance.value,
-    };
-
-DisplayableProperty _$DisplayablePropertyFromJson(Map<String, dynamic> json) =>
-    DisplayableProperty(
-      value: Caption.fromJson(json['value'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$DisplayablePropertyToJson(
-        DisplayableProperty instance) =>
-    <String, dynamic>{
       'value': instance.value,
     };

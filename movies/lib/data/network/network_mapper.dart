@@ -1,5 +1,5 @@
 import 'package:logger/logger.dart';
-import 'package:movies/data.network/entity/movie_entity.dart';
+import 'package:movies/data/network/entity/movie_entity.dart';
 import 'package:movies/domain/exception/mapper_exception.dart';
 import 'package:movies/domain/model/movie.dart';
 
